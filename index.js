@@ -96,17 +96,17 @@ app.get('/similarity', async (req, res) => {
 
 // function to calculate similarity between two candidates responses
 function calculateSimilarity(response1, response2) {
-  const total_questions = response1.answers.length;
-  const matching_answers= response1.answers.reduce((count, answer, index) => {
-    if (answer === response2.answers[index]) {
-      return count + 1;
-    }
-    return count;
-  }, 0);
-  const Percentage = (matching_answers / total_questions) * 100;
-  return Percentage;
-}
+  const totalQuestions = response1.length;
+  let count = 0;
 
+  for (let i = 0; i < totalQuestions; i++) {
+    if (response1.answers[i] === response2.answers[i]) {
+      count++;
+    }
+  }
+  const similarity_percentage = (count / totalQuestions) * 100;
+  return similarity_percentage;
+}
 
 // Start the server
 app.listen(port, () => {
